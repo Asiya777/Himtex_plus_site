@@ -138,6 +138,14 @@ footer{padding-block:34px 44px;text-align:center;color:var(--ink-2);font-size:14
 .fab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:30;background:#25d366;color:#fff;border:3px solid var(--ink);border-radius:99px;padding:14px 20px;font-weight:700;box-shadow:4px 4px 0 var(--ink)}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
 </style>
+<script>
+/* Meta Pixel: вставьте ID пикселя из Events Manager — без ID ничего не загружается */
+var META_PIXEL_ID='';
+if(META_PIXEL_ID){
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init',META_PIXEL_ID);fbq('track','PageView');
+}
+</script>
 </head>
 <body>
 
@@ -262,6 +270,12 @@ document.getElementById('lead').addEventListener('submit',function(e){
   a.href='https://wa.me/77017077383?text='+encodeURIComponent(t);
   document.getElementById('ok').hidden=false;
 });
+function track(ev){if(window.fbq)fbq('track',ev)}
+document.addEventListener('click',function(e){
+  var a=e.target.closest('a[href^="https://wa.me"],a[href^="tel:"]');
+  if(a)track('Contact');
+});
+document.getElementById('lead').addEventListener('submit',function(){track('Lead')});
 </script>
 </body>
 </html>
